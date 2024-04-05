@@ -1,18 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppLayout } from '../../../components/layouts'
 import ScheduleTable from './ScheduleTable';
 import ProgramTable from './ProgramTable';
 import SwapTable from './SwapTable';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
+import { refetchTecherData } from '../../../components/custom-hooks';
+import UserService from '../../../services/user.service';
+import { setAttendance, setUserActivity } from '../../../redux/reducers/activitySlice';
 
 export default function Profile() {
   const userActivity: any = useSelector((state: RootState) => state.activity.userActivity);
-  const [ tabs, setTabs ] = useState(0)
+  const userService = new UserService();
+  const dispatch = useDispatch();
+
+  const [ tabs, setTabs ] = useState(0);
   
   const h2Style = 'lg:text-[24px] text-[20px] font-[AvertaStd-Semibold] font-[400] leading-[33px] text-ryd-headerTextPrimary';
   const tabContainer = 'w-full flex gap-2 border-b border-gray-100 mt-7';
   const btnStyle = `px-7 py-1 hover:border-b-2 hover:border-ryd-primary`;
+
+  const refetchTecherData = async() => {
+    const userService = new UserService();
+
+    try {
+        const response = await userService.getActivity();
+        if(!response.status){
+            return false;
+        }  // console.log('res',res)
+        dispatch(setUserActivity(response.data));
+    }catch(err: any){
+        return false;
+    }
+  }
+
+  useEffect(() => {
+    refetchTecherData();
+  }, [])
+
+ 
 
   return (
     <AppLayout>  
@@ -38,9 +64,9 @@ export default function Profile() {
               />
             }
 
-            {tabs == 2 &&
+            {tabs === 2 &&
               <SwapTable 
-              data={userActivity.programs}
+                data={userActivity.programs}
               />
             }
           </div>

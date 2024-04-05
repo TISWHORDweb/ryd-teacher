@@ -35,7 +35,6 @@ export default function SignIn() {
                 toast.error(response?.message);
                 return;
             }
-            console.log(response)
             toast.success(response?.message);
             dispatch(setUserInfo(response?.data));
             localStorage.setItem('ryd-token-teacher', response?.data?.token);
@@ -48,13 +47,9 @@ export default function SignIn() {
     }
 
     return (
-        <AuthLayout
-        headerText="Welcome back!"
-        subText={<>Welcome Back! Log in to your<br/> account and pick up right where you left off</>}   
+        <AuthLayout   
         >
-            <h1 className={`${h1Style}`}>Log in to your account</h1>
-
-            <form className='mt-[3rem]' onSubmit={handleSubmit}>
+            <form className='mt-[2.5rem] pb-[2rem]  lg:px-[1rem]' onSubmit={handleSubmit}>
                  {/* email address  */}
                 <div className={flexContainer}>
                     <div className={gridContainer}>
@@ -82,16 +77,20 @@ export default function SignIn() {
                 </div>
 
                 {/* forgot password  */}
-                <Link to='/teacher/forgot-psd' className="text-[16px] font-[400] font-[AvertaStd-Semibold] leading-[26px] flex justify-end -mt-5 mb-[2rem] text-ryd-primary">Forgot password?</Link>
+                <Link 
+                    to='/teacher/forgot-psd' 
+                    className="text-[14px] font-[400] font-[AvertaStd-Semibold] leading-[26px] flex justify-end -mt-5  text-ryd-primary">
+                        Forgot password?
+                </Link>
 
                 <Button 
-                    text={loading ? 'Processing...' : 'Sign In'}
+                    text={loading ? 'Processing...' : 'Sign In and Explore'}
                     isInverted={false}
                     category='button'
-                    btnStyle='w-full rounded-[1000px] border-0 mt-6 text-[18px] leading-[26px] font-[400] text-white px-[26px] py-[15px]'
+                    btnStyle='w-full rounded-[16px] border-0 mt-6 text-[14px] leading-[26px] font-[400] text-white px-[26px] py-[12px]'
                 />
 
-                <p className="text-[16px] font-[400] leading-[26px] text-center mt-[2rem]">
+                <p className="text-[14px] font-[400] leading-[26px] text-center mt-6">
                     <span className="text-ryd-subTextPrimary">Haven't registered yet? </span><Link to='/teacher/sign-up' className="text-ryd-primary">Sign Up</Link>
                 </p>
             </form>

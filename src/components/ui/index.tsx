@@ -14,6 +14,7 @@ import ProgramCard from "./ProgramCard";
 import StudentCard from "./StudentCard";
 import Empty from "./Empty";
 import ProfileUpdate from "./ProfileUpdate";
+import TimezoneSelect from "./TimezoneSelect";
 
 export {
     OtpVerification,
@@ -31,5 +32,6 @@ export {
     ProgramCard,
     StudentCard,
     Empty,
-    ProfileUpdate
+    ProfileUpdate,
+    TimezoneSelect
 }

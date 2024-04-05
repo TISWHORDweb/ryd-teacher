@@ -11,7 +11,6 @@ const initialValues = {
     email: '',
     country: '',
     timezone: '',
-    timeOffset: 0,
     gender: 'male',
     phone: '',
     experience: 0,

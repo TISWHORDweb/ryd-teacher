@@ -24,11 +24,10 @@ export default function PersonalInfoKYC({ props, setActiveTab, setPreviousTab  }
   const { setFormData, formData } = props;
 
 
-  const h1Style = `font-[400] text-[28px] leading-[36.2px] font-[AvertaStd-Semibold] text-center text-ryd-subTextPrimary mt-5 mb-[1.5rem]`;
-  const flexContainer = `w-full lg:flex grid gap-10 mb-[2rem]`;
-  const gridContainer = `w-full grid gap-2`;
-  const inputFieldStyle = `w-full bg-ryd-gray rounded-[1000px] text-[16px] leading-[26px] font-[400] text-[#576877] px-[26px] py-[15px] outline-none active:outline-none`;
-  const labelStyle = `text-ryd-subTextPrimary font-[400] text-[15px] leading-[26px]`;
+  const flexContainer = `w-full lg:flex grid gap-5 mb-[1rem]`;
+  const gridContainer = `w-full grid gap-1`;
+  const inputFieldStyle = `w-full bg-ryd-gray rounded-[16px] text-[14px] leading-[26px] font-[400] text-[#576877] px-[26px] py-[12px] outline-none active:outline-none`;
+  const labelStyle = `text-ryd-subTextPrimary font-[400] text-[13px] leading-[26px]`;
 
   const handleFileUploadTrigger = () => {
     ref?.current?.click();
@@ -84,17 +83,16 @@ export default function PersonalInfoKYC({ props, setActiveTab, setPreviousTab  }
 
   return (
     <AuthLayout>
-        <h1 className={`${h1Style}`}>Teacher Sign Up</h1>
         <Stepper currentTab={2} />
 
-        <form className='mt-[3rem]' onSubmit={handleSubmit}>
+        <form className='mt-[2rem]' onSubmit={handleSubmit}>
             {/* Qualification  */}
             <div className={flexContainer}>
                 <div className={gridContainer}>
                     <label className={labelStyle}>Highest Level of Certification</label>
                     <CustomDropdown 
                         data={qualifications}
-                        handleChange={(data: any) =>  ({...formData, qualification: data.value })}
+                        handleChange={(data: any) =>  setFormData({...formData, qualification: data.value })}
                         className={inputFieldStyle}
                     />
                 </div>
@@ -119,11 +117,11 @@ export default function PersonalInfoKYC({ props, setActiveTab, setPreviousTab  }
             <div className={flexContainer}>
                 <div className={gridContainer}>
                     <label className={labelStyle}>CV</label>
-                    <div className='w-full rounded-[32px] border border-dotted border-ryd-primary lg:h-[250px] h-[200px] bg-ryd-primaryLess1/[.3]'>
+                    <div className='w-full rounded-[16px] border border-dotted border-ryd-primary lg:h-[200px] h-[200px] bg-ryd-primaryLess1/[.3]'>
                         {!selectedFile &&
-                            <div className='w-fit m-auto lg:mt-[6rem] mt-[4.5rem] hover:cursor-pointer' onClick={handleFileUploadTrigger}>
+                            <div className='w-fit m-auto lg:mt-[4.5rem] mt-[4.5rem] hover:cursor-pointer' onClick={handleFileUploadTrigger}>
                                 <img src={uploadImg} alt="upload" className='mx-auto' />
-                                <p className='text-ryd-primary text-[18px] font-[400] font-[AvertaStd-Semibold]'>Upload CV</p>
+                                <p className='text-ryd-primary text-[1p4x] font-[400] font-[AvertaStd-Semibold]'>Upload CV</p>
                             </div>
                         }
 
@@ -153,7 +151,7 @@ export default function PersonalInfoKYC({ props, setActiveTab, setPreviousTab  }
                         isInverted={true}
                         category='button'
                         handleClick={handlePrevious}
-                        btnStyle='w-full rounded-[1000px] mt-6 text-[18px] leading-[26px] font-[400] text-ryd-primary border border-ryd-primary px-[26px] py-[15px]'
+                        btnStyle='w-full rounded-[16px] mt-3 text-[12px] leading-[26px] font-[400] text-ryd-primary border border-ryd-primary px-[26px] py-[12px]'
                     />
                 </div>
                 <div className="lg:col-span-2 col-span-1">
@@ -162,13 +160,13 @@ export default function PersonalInfoKYC({ props, setActiveTab, setPreviousTab  }
                         isInverted={false}
                         category='button'
                         type='submit'
-                        btnStyle='w-full rounded-[1000px] border-0 mt-6 text-[18px] leading-[26px] font-[400] text-white px-[26px] py-[15px]'
+                        btnStyle='w-full rounded-[16px] border-0 mt-3 text-[14px] leading-[26px] font-[400] text-white px-[26px] py-[12px]'
                     />
                 </div>
             </div>
 
 
-            <p className="text-[16px] font-[400] leading-[26px] text-center mt-[2rem]">
+            <p className="text-[14px] font-[400] leading-[26px] text-center mt-[2rem]">
                 <span className="text-ryd-subTextPrimary">Already have an account? </span><Link to='/teacher/sign-in' className="text-ryd-primary">Sign In</Link>
             </p>
         </form>

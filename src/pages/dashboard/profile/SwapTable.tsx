@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import UserService from '../../../services/user.service';
 
 interface Props {
-    data: any[] | []
+    data: any[] | [],
 }
 
 export default function SwapTable({ data }: Props) {
@@ -28,7 +28,7 @@ export default function SwapTable({ data }: Props) {
         try{
             const response = await userService.getTeachers();
             if(!response.status){
-                toast.error(response.message);
+                // toast.error(response.message);
                 return;
             }
             // set single teacher initial data 
@@ -44,7 +44,7 @@ export default function SwapTable({ data }: Props) {
             }
             setTeachersArr(arr)
         }catch(err: any){
-            toast.error(err?.message);
+            // toast.error(err?.message);
             return;
         }
     }
@@ -66,6 +66,7 @@ export default function SwapTable({ data }: Props) {
                 return;
             }
             toast.success(response.message);
+            setToggleModal(false);
         }catch(err: any){
             setLoading(false);
             toast.error(err.message);
@@ -81,7 +82,7 @@ export default function SwapTable({ data }: Props) {
     const h1Style = 'lg:text-[22px] text-[20px] font-[400]  font-[AvertaStd-Semibold] text-center capitalize'
 
     return (
-        <div className='mt-[3rem] border-x border-x-[#F7F7F7] border-b border-b-[#F7F7F7] lg:w-full w-[700px] overflow-x-auto'>
+        <div className={`mt-[3rem] ${data.length > 0 ? 'border-x border-x-[#F7F7F7] border-b border-b-[#F7F7F7]' : 'border-0'} lg:w-full w-[700px] overflow-x-auto`}>
             {data?.length > 0 ?
             <>
                 <ul>
@@ -96,26 +97,26 @@ export default function SwapTable({ data }: Props) {
                     </li>
                 </ul>
                 <ol>
-                        {data?.map((item: any, index: number) => (
-                            <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
-                                <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
-                                <p className={`${tableBody} w-[15%]`}>{item?.package?.title.replace(/Program/g, '')}</p>
-                                <p className={`${tableBody} w-[15%] capitalize`}>{item?.child?.gender}</p>
-                                <p className={`${tableBody} w-[15%]`}>{item?.level}</p>
-                                <p className={`${tableBody} w-[10%]`}>{getDay(item?.day)}</p>
-                                <p className={`${tableBody} w-[10%]`}>{getTime(item?.time)}</p>
-                                <p className={`${tableBody} w-[15%] text-center`}>
-                                    <button 
-                                        className={attendanceBtnStyle} 
-                                        onClick={() => {
-                                            setToggleModal(true)
-                                            setSelectedStudent(item)
-                                        }}>
-                                            Swap request
-                                    </button>
-                                </p>
-                            </li>
-                        ))}
+                    {data?.map((item: any, index: number) => (
+                        <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
+                            <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
+                            <p className={`${tableBody} w-[15%]`}>{item?.package?.title.replace(/Program/g, '')}</p>
+                            <p className={`${tableBody} w-[15%] capitalize`}>{item?.child?.gender}</p>
+                            <p className={`${tableBody} w-[15%]`}>{item?.level}</p>
+                            <p className={`${tableBody} w-[10%]`}>{getDay(item?.day)}</p>
+                            <p className={`${tableBody} w-[10%]`}>{getTime(item?.time)}</p>
+                            <p className={`${tableBody} w-[15%] text-center`}>
+                                <button 
+                                    className={attendanceBtnStyle} 
+                                    onClick={() => {
+                                        setToggleModal(true)
+                                        setSelectedStudent(item)
+                                    }}>
+                                        Swap request
+                                </button>
+                            </p>
+                        </li>
+                    ))}
                 </ol>
             </> :
             <Empty text='You have no student records' />

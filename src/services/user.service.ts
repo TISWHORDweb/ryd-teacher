@@ -1,5 +1,5 @@
 import { request } from "../hook/api";
-import { PasswordUpdateProps, SwapProgramProps } from "./_model";
+import { AttendanceProps, MediaAssessmentUrlProps, PasswordUpdateProps, SwapProgramProps } from "./_model";
 
 /**
  *
@@ -69,6 +69,39 @@ class UserService {
         try {  
             const response = await request(
                 '/teacher/swap/set' , 
+                'POST',
+                payload,
+                true,
+                false,
+                false,
+            )
+            return response;
+        }catch(err){
+            throw err;
+        }
+    }
+
+
+    async submitMediaAssessmentUrl(payload: MediaAssessmentUrlProps, id: string | number) {
+        try {  
+            const response = await request(
+                `/teacher/update/program/${id}` , 
+                'POST',
+                payload,
+                true,
+                false,
+                false,
+            )
+            return response;
+        }catch(err){
+            throw err;
+        }
+    }
+
+    async submitAttendance(payload: AttendanceProps) {
+        try {  
+            const response = await request(
+                `/teacher/mark/attendance` , 
                 'POST',
                 payload,
                 true,

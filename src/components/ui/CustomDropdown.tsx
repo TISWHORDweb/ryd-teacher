@@ -27,14 +27,14 @@ export default function CustomDropdown({ className, handleChange, data }: Props)
             </div>
             {toggle &&
                 <div className="h-fit z-20 overflow-y-auto absolute top-4 w-full shadow bg-white text-ryd-subTextPrimary text-[14px]">
-                {data.length > 0 && data?.map((item, index) => (
+                {data?.length > 0 && data?.map((item, index) => (
                     <div key={index} 
                     className="hover:bg-ryd-gray px-4 py-1 hover:cursor-pointer capitalize" 
                     onClick={() => {
                         setToggle(false)
                         handleSelectChange(item);
                         }}>
-                    {item.name}
+                    {item?.name}
                     </div>
                 ))}
                 </div>

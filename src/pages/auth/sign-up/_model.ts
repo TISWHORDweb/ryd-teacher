@@ -14,7 +14,6 @@ export interface AuthProps {
             password: string,
             docUrl: string,
             timezone: string,
-            timeOffset: number
         
         }
     },

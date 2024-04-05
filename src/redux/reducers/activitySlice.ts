@@ -4,10 +4,12 @@ import { UserInfoProps } from "./_model";
 
 interface ActivityStateProps {
   userActivity: any;
+  attendance: any
 }
 
 const initialState: ActivityStateProps = {
   userActivity: [],
+  attendance: [],
 };
 
 const activitySlice = createSlice({
@@ -20,9 +22,16 @@ const activitySlice = createSlice({
     ) => {
       state.userActivity = action?.payload;
     },
+
+    setAttendance: (
+      state: any,
+      action: PayloadAction<{ attendance: any  }>,
+    ) => {
+      state.attendance = action?.payload;
+    },
     
   },
 });
 
-export const { setUserActivity } = activitySlice.actions;
+export const { setUserActivity, setAttendance } = activitySlice.actions;
 export default activitySlice.reducer;

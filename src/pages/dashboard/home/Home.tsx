@@ -1,15 +1,13 @@
 import  { useEffect, useState } from 'react'
 import { AppLayout } from '../../../components/layouts';
-import { Button, CustomModal, CustomSearchInput, Empty } from '../../../components/ui';
-// import CartModal from './CartModal';
+import { Empty } from '../../../components/ui';
 import SectionOne from './SectionOne';
-import { students } from '../../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import UserService from '../../../services/user.service';
 import { toast } from 'react-toastify';
 import { setUserActivity } from '../../../redux/reducers/activitySlice';
-import { getDay, getTime, getTodayDays } from '../../../components/custom-hooks';
+import { getDay, getTime, isToday } from '../../../components/custom-hooks';
 import { Link } from 'react-router-dom';
 
 export interface ChildRegProps {
@@ -37,14 +35,15 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const [ formData, setFormData ] = useState(initialValues);
-    const [ toggleModal, setToggleModal ] = useState(false);
-    const [ loading, setLoading ] = useState(false);
     const [ data, setData ] = useState<any>(null);
     const [ todayClasses, setTodayClasses ] = useState<any>(null);
+    const [ totalStudents, setTotalStudents ] = useState<any>([]);
+    const [ activeStudents, setActiveStudents ] = useState<any>([]);
+
 
     useEffect(() => {
         getActivity();
-    }, [])
+    }, []);
 
 
     const getActivity = async() => {
@@ -54,11 +53,19 @@ export default function Home() {
                 toast.error(response.message);
                 return;
             }
-            // console.log(response.data)
-            dispatch(setUserActivity(response.data))
-            setData(response.data);
-            const tdx = getTodayDays(response.data);
-            setTodayClasses(tdx)
+            dispatch(setUserActivity(response?.data))
+            setData(response?.data);
+            // const tdx = getTodayDays(response?.data);
+            // setTodayClasses(tdx);
+
+            // total students 
+            setTotalStudents(response?.data?.programs)
+            // get active students 
+            const active = response?.data?.programs?.filter((item: any) => item?.child?.status === true);
+            setActiveStudents(active);
+            // classes for today 
+            const classesForToday = response?.data?.programs?.filter((item: any) => isToday(item?.nextClassDate));
+            setTodayClasses(classesForToday);
         }catch(err: any){
             toast.error(err?.message);
             return;
@@ -66,22 +73,21 @@ export default function Home() {
     }
 
 
-    const handleSearch = () => {}
-
-
-
-    const h1Style = 'lg:text-[30px] text-[26px] font-[AvertaStd-Semibold] capitalize font-[400] leading-[46px] text-ryd-headerTextPrimary';
-    const h2Style = 'lg:text-[24px] text-[20px] font-[AvertaStd-Semibold] font-[400] leading-[33px] text-ryd-headerTextPrimary';
+    const h1Style = 'lg:text-[30px] text-[24px] font-[AvertaStd-Semibold] capitalize font-[400] leading-[46px] text-ryd-headerTextPrimary';
+    const h2Style = 'lg:text-[24px] text-[18px] font-[AvertaStd-Semibold] font-[400] leading-[33px] text-ryd-headerTextPrimary';
     const tableHeader = 'text-[17px] font-[400] leading-[26px] font-[AvertaStd-Semibold] text-ryd-headerTextPrimary';
     const tableBody = 'text-[16px] font-[400] font-[AvertaStd-Light]  leading-[26px] text-[#616161]';
-    const attendanceBtnStyle = 'rounded-[7px] bg-blue-400 py-1 px-2 text-white text-[11px] border-0'
 
     const props = { formData, setFormData };
 
     return (
         <AppLayout>
-            <h1 className={h1Style}>Hello, {userInfo.firstName} ☀️</h1>
-            <SectionOne />
+            <h1 className={h1Style}>Hello, {userInfo?.firstName} ☀️</h1>
+            <SectionOne 
+                todayClasses={todayClasses}
+                totalStudents={totalStudents}
+                activeStudents={activeStudents}
+            />
             <section>
                 <div className="w-full flex flex-wrap items-end justify-between mt-[4rem]">
                     <h2 className={h2Style}>Students</h2>
@@ -89,7 +95,7 @@ export default function Home() {
                         to={data?.classLink} 
                         target='_blank' 
                         referrerPolicy='no-referrer' 
-                        className="w-fit rounded-[7px] border-0 mt-6 text-[16px] leading-[26px] font-[400] bg-ryd-primary text-white px-[32px] py-[13px] hover:cursor-pointer"
+                        className="w-fit rounded-[7px] border-0 mt-6 lg:text-[16px] text-[14px] leading-[26px] font-[400] bg-ryd-primary text-white lg:px-[32px] px-[25px] lg:py-[13px] py-[10px] hover:cursor-pointer"
                         >
                         My Class
                     </Link>
@@ -112,7 +118,7 @@ export default function Home() {
                                     <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
                                         <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
                                         <p className={`${tableBody} w-[15%] capitalize`}>{item?.child?.gender}</p>
-                                        <p className={`${tableBody} w-[20%]`}>{item?.package?.title.replace(/Program/g, '')}</p>
+                                        <p className={`${tableBody} w-[20%]`}>{item?.package?.title?.replace(/Program/g, '')}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{item?.level}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{getDay(item?.day)}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{getTime(item?.time)}</p>

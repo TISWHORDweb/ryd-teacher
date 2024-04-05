@@ -18,7 +18,7 @@ export default function ScheduleTable({ data }: Props) {
 
     return (
         <div className={`mt-[3rem] ${data.length > 0 ? 'border-x border-x-[#F7F7F7] border-b border-b-[#F7F7F7]' : 'border-0'} lg:w-full w-[700px] overflow-x-auto`}>
-            { data.length > 0 ? 
+            { data?.length > 0 ? 
                 <>
                     <ul>
                         <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>       
@@ -34,7 +34,7 @@ export default function ScheduleTable({ data }: Props) {
                     <ol>
                     {data?.map((item: any, index: number) => (
                         <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
-                            <p className={`${tableBody} w-[20%] capitalize`}>{item.child?.firstName} {item?.child?.lastName}</p>
+                            <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
                             {/* <p className={`${tableBody} w-[15%]`}>{item.class}</p> */}
                             <p className={`${tableBody} w-[20%]`}>{item?.package?.title.replace(/Program/g, '')}</p>
                             <p className={`${tableBody} w-[10%]`}>{item?.level}</p>

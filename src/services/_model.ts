@@ -33,3 +33,15 @@ export interface SwapProgramProps {
     toTeacherId: number,
     programId: number
 }
+
+
+export interface MediaAssessmentUrlProps {
+    assessmentUrl?: string,
+    mediaUrl?: string
+}
+
+export interface AttendanceProps {
+    score: number,
+    status: boolean,
+    programId: number | string
+}

@@ -21,16 +21,24 @@ export default function CreateNewPassword() {
 
     return (
         <AuthLayout
-            headerText="Password Recovery"
-            subText={<>Create a strong password to ensure the safety of your <br /> account. Use a combination of letters, numbers, and <br /> symbols for added security.</>}
         >
-            <h1 className={h1Style}>Create New Password</h1>
-
             <form className='mt-[3rem]' onSubmit={handleSubmit}>
                 {/* password  */}
                 <div className={flexContainer}>
                     <div className={gridContainer}>
-                        <label className={labelStyle}>Enter password</label>
+                        <label className={labelStyle}>Old Password</label>
+                        <CustomInput
+                            type="password" 
+                            placeholder='XXXXXXXXX'
+                            required={true}
+                            onChange={(e: any) => setFormData({...formData, password: e.target.value })}
+                        />
+                    </div>
+                </div>
+
+                <div className={flexContainer}>
+                    <div className={gridContainer}>
+                        <label className={labelStyle}>New Password</label>
                         <CustomInput
                             type="password" 
                             placeholder='XXXXXXXXX'

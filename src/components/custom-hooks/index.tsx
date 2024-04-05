@@ -2,8 +2,9 @@ import useOnClickOutside from "./useOnClickOutside";
 import { formatDate } from "./formatDate";
 import fetchTimezoneInfo from "./fetchTimezoneInfo";
 import { getDay, getTime } from "./getDayTime";
-import compareDate from "./compareDate";
+import isToday from "./isToday";
 import getTodayDays from "./getTodayDays";
+import { refetchTecherData } from "./refetchTecherData";
 
 export {
     useOnClickOutside,
@@ -11,6 +12,7 @@ export {
     fetchTimezoneInfo,
     getDay,
     getTime,
-    compareDate,
-    getTodayDays
+    isToday,
+    getTodayDays,
+    refetchTecherData,
 }
