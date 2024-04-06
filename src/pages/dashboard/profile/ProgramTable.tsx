@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { attendance, students } from '../../../utils/constants';
 import { CustomInput, CustomModal, Empty } from '../../../components/ui';
 import { formatDate, getDay, getTime, refetchTecherData } from '../../../components/custom-hooks';
 import UserService from '../../../services/user.service';
@@ -7,12 +6,16 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { setAttendance, setUserActivity } from '../../../redux/reducers/activitySlice';
+import Moment from 'react-moment';
+import moment from 'moment-timezone';
+import 'moment-timezone';
 
 interface Props {
     data: any[] | []
 }
 
 export default function ProgramTable({ data }: Props) {
+    const userInfo: any = useSelector((state: RootState) => state.auth.userInfo);
     const { userActivity, attendance } = useSelector((state: RootState) => state.activity)
     const userService = new UserService();
     const dispatch = useDispatch();
@@ -154,24 +157,34 @@ export default function ProgramTable({ data }: Props) {
                     <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>       
                         <p className={`${tableHeader} w-[20%]`}>Name</p>     
                         <p className={`${tableHeader} w-[10%]`}>Gender</p>
-                        <p className={`${tableHeader} w-[20%] text-center`}>Program</p>
+                        <p className={`${tableHeader} w-[15%] text-center`}>Program</p>
                         <p className={`${tableHeader} w-[10%]`}>Level</p>
+                        <p className={`${tableHeader} w-[15%]`}>Class Time</p>
                         <p className={`${tableHeader} w-[10%]`}>Day</p>
-                        <p className={`${tableHeader} w-[10%] text-center`}>Time</p>
                         <p className={`${tableHeader} w-[20%] text-center`}>Actions</p>
                     </li>
                 </ul>
 
             
                 <ol>
-                    {data?.map((item: any, index: number) => (
+                    {data?.map((item: any, index: number) => {
+                        const pTime = moment.utc().utcOffset(item.child.parent.timeOffset)
+                        pTime.day(item.day)
+                        pTime.hour(item.time)
+                        pTime.second(0)
+                        pTime.minute(0)
+                        //convert to teacher time
+                        
+                        return(
                         <li key={item?.id} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
                             <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
                             <p className={`${tableBody} w-[10%] capitalize`}>{item?.child?.gender}</p>
-                            <p className={`${tableBody} w-[20%] text-center`}>{item?.package?.title.replace(/Program/g, '')}</p>
+                            <p className={`${tableBody} w-[15%] text-center`}>{item?.package?.title.replace(/Program/g, '')}</p>
                             <p className={`${tableBody} w-[10%]`}>{item?.level}</p>
+                            <p className={`${tableBody} w-[15%]`}>
+                                <Moment format='hh:mm A' date={pTime.toISOString()} tz={userInfo.timezone}></Moment>
+                            </p>
                             <p className={`${tableBody} w-[10%]`}>{getDay(item?.day)}</p>
-                            <p className={`${tableBody} w-[10%] text-center`}>{getTime(item?.time)}</p>
                             <p className={`${tableBody} w-[20%] text-center`}>
                                 <button className={attendanceBtnStyle}
                                  onClick={() => {
@@ -181,7 +194,7 @@ export default function ProgramTable({ data }: Props) {
                                 }}>Manage record</button>
                             </p>
                         </li>
-                    ))}
+                    )})}
                 </ol> 
             </> : <Empty text="You have no student records" />
             }

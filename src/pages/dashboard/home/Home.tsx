@@ -55,6 +55,7 @@ export default function Home() {
             }
             dispatch(setUserActivity(response?.data))
             setData(response?.data);
+            console.log(response?.data)
             // const tdx = getTodayDays(response?.data);
             // setTodayClasses(tdx);
 
