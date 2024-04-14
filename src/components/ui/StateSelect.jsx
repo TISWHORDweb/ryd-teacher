@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   GetState,
 } from "react-country-state-city";
+import { useOnClickOutside } from "../custom-hooks";
 // import "react-country-state-city/dist/react-country-state-city.css";
 
 
@@ -10,7 +11,18 @@ export default function StateSelectInput({ country, handleStateChange, className
   const [ stateList, setStateList ] = useState([]);
   const [ selectedState, setSelectedState ] = useState({});
   const [ toggle, setToggle ] = useState(false);
+  
+  const stateSelectRef = useRef(null);
+
   const boxStyle = `relative`;
+
+  const closeModal = () => {
+    setToggle(false);
+    // setSearchQuery('');
+    setStateList(country?.states)
+  }
+
+  useOnClickOutside(stateSelectRef, closeModal);
 
   useEffect(() => {
     const idx = country ? country.id : 1;
@@ -22,7 +34,7 @@ export default function StateSelectInput({ country, handleStateChange, className
   }, [country])
 
   return (
-    <div className={`${boxStyle}`}>
+    <div className={`${boxStyle}`} ref={stateSelectRef}>
       <div
         className={`${className} hover:cursor-pointer`}
         onClick={() => setToggle(prevState => !prevState)}

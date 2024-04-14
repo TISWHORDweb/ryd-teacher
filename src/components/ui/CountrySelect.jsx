@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useOnClickOutside } from "../custom-hooks";
   
 
 const  countriesArr = require('../../utils/countries.json');
@@ -8,13 +9,22 @@ export default function CountrySelectInput({ handleCountryChange, className }) {
   const [ selectedCountry, setSelectedCountry ] = useState({});
   const [ toggle, setToggle ] = useState(false);
   const [ searchQuery, setSearchQuery ] = useState('');
-  
+
+  const countrySelectRef = useRef(null);
+
   const boxStyle = 'relative';
 
+  const closeModal = () => {
+    setToggle(false);
+    setSearchQuery('');
+    setCountries(countriesArr)
+  }
+
+  useOnClickOutside(countrySelectRef, closeModal)
 
   const handleCountrySearch = (e) => {
     const text = e.target.value;
-    setSearchQuery(text);
+    setSearchQuery(text.toLowerCase());
   }
 
   useEffect(() => {
@@ -34,7 +44,7 @@ export default function CountrySelectInput({ handleCountryChange, className }) {
 
 
   return (
-    <div className={`${boxStyle}`}>
+    <div className={`${boxStyle}`} ref={countrySelectRef}>
       <div
         className={`${className} hover:cursor-pointer`}
         onClick={() => setToggle(prevState => !prevState)}
