@@ -8,7 +8,6 @@ const steps = [
     { name: '01', id: 1 },
     { name: '02', id: 2 },
     { name: '03', id: 3 },
-    { name: '04', id: 4 }
 ]
 
 export default function Stepper({ currentTab }: Props){
