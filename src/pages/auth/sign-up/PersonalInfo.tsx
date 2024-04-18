@@ -47,22 +47,22 @@ const handleTimezoneChange = (data: any) => {
 
   const handleSubmit = async(e: any) => {
         e.preventDefault();
+        setActiveTab()
     
-        setEmailLoading(true);
-        try{
-            const response = await authService.verifyEmail({ email: formData.email });
-            setEmailLoading(false)
-            if(!response.status){
-                toast.error(response?.message);
-                return
-            }
-            const obj = JSON.stringify(response)
-            localStorage.setItem('email-confirmation', obj);
-            setActiveTab()
-        }catch(err: any){
-            setEmailLoading(false)
-            toast.error(err?.message);
-        }
+        // setEmailLoading(true);
+        // try{
+        //     const response = await authService.verifyEmail({ email: formData.email });
+        //     setEmailLoading(false)
+        //     if(!response.status){
+        //         toast.error(response?.message);
+        //         return
+        //     }
+        //     const obj = JSON.stringify(response)
+        //     localStorage.setItem('email-confirmation', obj);
+        // }catch(err: any){
+        //     setEmailLoading(false)
+        //     toast.error(err?.message);
+        // }
     }
 
 

@@ -43,12 +43,12 @@ export default function SignUp({}) {
                     setActiveTab={() => setActiveTab(activeTab + 1)}
                     />
             }
-            {/* {activeTab === 3 && 
+            {activeTab === 3 && 
                 <PasswordInfo 
                     props={props} 
                     setActiveTab={() => setActiveTab(activeTab + 1)}
                     />
-            } */}
+            }
             {/* {activeTab === 3 && 
                 <OtpVerificationForm formData={formData} />
             } */}

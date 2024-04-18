@@ -25,8 +25,8 @@ export default function PasswordInfo({ props, setActiveTab }: AuthProps){
 
     const { setFormData, formData } = props;
 
-    const respObj: any = localStorage.getItem('email-confirmation');
-    const obj = JSON.parse(respObj);
+    // const respObj: any = localStorage.getItem('email-confirmation');
+    // const obj = JSON.parse(respObj);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
