@@ -46,7 +46,6 @@ export default function SignUp({}) {
             {activeTab === 3 && 
                 <PasswordInfo 
                     props={props} 
-                    setActiveTab={() => setActiveTab(activeTab + 1)}
                     />
             }
             {/* {activeTab === 3 && 

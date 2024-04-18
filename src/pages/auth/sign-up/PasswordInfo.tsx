@@ -10,7 +10,7 @@ import { setUserInfo } from '../../../redux/reducers/authSlice';
 
 
 
-export default function PasswordInfo({ props, setActiveTab }: AuthProps){
+export default function PasswordInfo({ props }: any){
     const authService = new AuthService();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -107,7 +107,7 @@ export default function PasswordInfo({ props, setActiveTab }: AuthProps){
                 </div> */}
 
                 <Button 
-                    text={'Continue'}
+                    text={loading? 'Processing...' : 'Submit'}
                     isInverted={false}
                     category='button'
                     btnStyle='w-full rounded-[16px] border-0 mt-6 text-[14px] leading-[26px] font-[400] text-white px-[26px] py-[12px]'
