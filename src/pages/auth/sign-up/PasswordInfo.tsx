@@ -63,7 +63,7 @@ export default function PasswordInfo({ props }: any){
     return (
         <AuthLayout
         >
-            <Stepper currentTab={2} />
+            <Stepper currentTab={3} />
 
             <form className='mt-[3rem] lg:px-[1rem]' onSubmit={handleSubmit}>
                 {/* password  */}
