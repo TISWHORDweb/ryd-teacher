@@ -39,6 +39,7 @@ export default function Home() {
     const [ todayClasses, setTodayClasses ] = useState<any>(null);
     const [ totalStudents, setTotalStudents ] = useState<any>([]);
     const [ activeStudents, setActiveStudents ] = useState<any>([]);
+    const [ loading, setLoading ] = useState(false);
 
 
     useEffect(() => {
@@ -47,8 +48,11 @@ export default function Home() {
 
 
     const getActivity = async() => {
+        setLoading(true);
         try {
             const response = await userService.getActivity();
+            setLoading(false);
+
             if(!response.status){
                 toast.error(response.message);
                 return;
@@ -67,6 +71,7 @@ export default function Home() {
             const classesForToday = response?.data?.programs?.filter((item: any) => isToday(item?.day));
             setTodayClasses(classesForToday);
         }catch(err: any){
+            setLoading(false);
             toast.error(err?.message);
             return;
         }
@@ -101,7 +106,9 @@ export default function Home() {
                     </Link>
                 </div>
                 
-                <div>{todayClasses?.length > 0 ? 
+               <>
+               {!loading ? 
+               <div>{todayClasses?.length > 0 ? 
                         <div className='mt-[3rem] border-x border-x-[#F7F7F7] border-b border-b-[#F7F7F7] lg:w-full w-[700px] overflow-x-auto'>
                             <ul>
                                 <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>       
@@ -129,7 +136,10 @@ export default function Home() {
                         :
                         <Empty text="You have no class for today." /> 
                     }
-                </div>
+                </div> : 
+                <div className='w-fit h-fit mx-auto text-[18px] mt-[5rem]'>Loading data...</div>
+                }
+               </>
 
                
             </section>

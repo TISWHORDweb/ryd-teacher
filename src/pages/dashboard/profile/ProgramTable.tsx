@@ -168,7 +168,7 @@ export default function ProgramTable({ data }: Props) {
             
                 <ol>
                     {data?.map((item: any, index: number) => {
-                        const pTime = moment.utc().utcOffset(item?.child?.parent?.timeOffset)
+                        const pTime = moment.utc().utcOffset(Number(userInfo?.timeOffset))
                         pTime.day(item?.day)
                         pTime.hour(item?.time)
                         pTime.second(0)

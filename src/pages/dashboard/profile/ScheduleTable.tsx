@@ -15,6 +15,7 @@ export default function ScheduleTable({ data }: Props) {
     const userInfo: any = useSelector((state: RootState) => state.auth.userInfo);
     const [ toggleModal, setToggleModal ] = useState(false);
 
+    console.log('schedule', data)
 
     const tableHeader = 'text-[17px] font-[400] leading-[26px] font-[AvertaStd-Semibold] text-ryd-headerTextPrimary';
     const tableBody = 'text-[16px] font-[400] font-[AvertaStd-Light]  leading-[26px] text-[#616161]';
@@ -37,7 +38,7 @@ export default function ScheduleTable({ data }: Props) {
                     </ul> 
                     <ol>
                     {data?.map((item: any, index: number) => { 
-                        const pTime = moment.utc().utcOffset(item.child.parent.timeOffset)
+                        const pTime = moment.utc().utcOffset(Number(userInfo.timeOffset))
                         pTime.day(item.day)
                         pTime.hour(item.time)
                         pTime.second(0)
