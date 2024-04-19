@@ -105,9 +105,9 @@ export default function Home() {
                         <div className='mt-[3rem] border-x border-x-[#F7F7F7] border-b border-b-[#F7F7F7] lg:w-full w-[700px] overflow-x-auto'>
                             <ul>
                                 <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>       
-                                    <p className={`${tableHeader} w-[30%]`}>Name</p>    
+                                    <p className={`${tableHeader} w-[20%]`}>Name</p>    
                                     <p className={`${tableHeader} w-[15%] `}>Gender</p>
-                                    <p className={`${tableHeader} w-[10%]`}>Program</p>
+                                    <p className={`${tableHeader} w-[20%]`}>Program</p>
                                     <p className={`${tableHeader} w-[15%] text-center`}>Level</p>
                                     <p className={`${tableHeader} w-[15%] text-center`}>Day of class</p>
                                     <p className={`${tableHeader} w-[15%] text-center`}>Time of class</p>
@@ -116,9 +116,9 @@ export default function Home() {
                             <ol>
                                 {todayClasses?.map((item: any, index: number) => (
                                     <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
-                                        <p className={`${tableBody} w-[30%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
+                                        <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
                                         <p className={`${tableBody} w-[15%] capitalize`}>{item?.child?.gender}</p>
-                                        <p className={`${tableBody} w-[10%]`}>{item?.package?.title?.replace(/Program/g, '')}</p>
+                                        <p className={`${tableBody} w-[20%]`}>{item?.package?.title?.replace(/Program/g, '')}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{item?.level}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{getDay(item?.day)}</p>
                                         <p className={`${tableBody} w-[15%] text-center`}>{getTime(item?.time)}</p>
