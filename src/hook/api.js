@@ -1,18 +1,18 @@
 import { toast } from 'react-toastify';
 
- 
+
   const logout = () => {
     localStorage.clear();
     window.location.href = "/teacher/sign-in";
     toast.error('Session expired!')
   };
-  
+
   export const requestHeader = {
     Accept: "application/json",
     "Cache-Control": "no-cache",
     "Content-Type": "application/json",
   };
-  
+
   /**
    *
    * @param {string} url
@@ -23,20 +23,21 @@ import { toast } from 'react-toastify';
    * @param {boolean} form
    * @returns Response Data;
    */
-  
-  
+
+
   const API_USER_URL = "https://api-pro.rydlearning.com"   // "http://192.168.0.161:3000"   // process.env.REACT_APP_BASE_URL;   // get BASE URL from backend
-  
+  //const API_USER_URL = "http://localhost:3000"   // "http://192.168.0.161:3000"   // process.env.REACT_APP_BASE_URL;   // get BASE URL from backend
+
   export async function request(url, method, payload, token, text, form) {
     const  bearerToken = localStorage.getItem('ryd-token-teacher');
-  
+
     if (token) {
       requestHeader['authorization'] = `bearer ${bearerToken}`;
     }
-  
+
     requestHeader["Content-Type"] =
       form === true ? "multipart/form-data" : "application/json";
-  
+
     if (method === "GET") {
       return fetch(API_USER_URL + url, {
         method,
@@ -82,4 +83,3 @@ import { toast } from 'react-toastify';
         });
     }
   }
-  

@@ -82,7 +82,7 @@ export default function ProgramTable({ data }: Props) {
                 return;
             }
             toast.success(response.message);
-            // refetch user data 
+            // refetch user data
             const res = await refetchTecherData();
             if(!res){
                 return;
@@ -100,7 +100,7 @@ export default function ProgramTable({ data }: Props) {
     const handleMarkPresent = async(e: any) => {
         e.preventDefault();
         setPresentLoading(true);
-        
+
         try{
             const response = await userService.submitAttendance({ score: assessmentScore, status: true, programId: selectedStudent.id })
             setPresentLoading(false);
@@ -109,7 +109,7 @@ export default function ProgramTable({ data }: Props) {
                 return;
             }
             toast.success(response.message);
-            // refetch user data 
+            // refetch user data
             const res = await refetchTecherData();
             if(!res){
                 return;
@@ -130,14 +130,14 @@ export default function ProgramTable({ data }: Props) {
     const sortAttendance = (data: any) => {
         const ctxStudent = userActivity.programs.filter((item: any) => item.id === data?.id);
         setStudentAttendance(ctxStudent);
-        dispatch(setAttendance(ctxStudent)); 
+        dispatch(setAttendance(ctxStudent));
     }
 
 
     useEffect(() => {
         const currentStdnt = userActivity.programs.filter((item: any) => item?.id === selectedStudent?.id);
         setStudentAttendance(currentStdnt);
-        dispatch(setAttendance(currentStdnt)); 
+        dispatch(setAttendance(currentStdnt));
     }, [isMarked])
 
 
@@ -154,8 +154,8 @@ export default function ProgramTable({ data }: Props) {
             {data?.length > 0 ?
             <>
                 <ul>
-                    <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>       
-                        <p className={`${tableHeader} w-[20%]`}>Name</p>     
+                    <li className='w-full flex items-center p-3 rounded-t-[10px] bg-[#F7F7F7]'>
+                        <p className={`${tableHeader} w-[20%]`}>Name</p>
                         <p className={`${tableHeader} w-[10%]`}>Gender</p>
                         <p className={`${tableHeader} w-[15%] text-center`}>Program</p>
                         <p className={`${tableHeader} w-[10%]`}>Level</p>
@@ -165,10 +165,10 @@ export default function ProgramTable({ data }: Props) {
                     </li>
                 </ul>
 
-            
+
                 <ol>
                     {data?.map((item: any, index: number) => {
-                        const pTime = moment.utc().utcOffset(Number(userInfo?.timeOffset))
+                        const pTime = moment().utc(false).utcOffset(item?.child?.parent?.timeOffset)
                         pTime.day(item?.day)
                         pTime.hour(item?.time)
                         pTime.second(0)
@@ -195,11 +195,11 @@ export default function ProgramTable({ data }: Props) {
                             </p>
                         </li>
                     )})}
-                </ol> 
+                </ol>
             </> : <Empty text="You have no student records" />
             }
 
-            {toggleModal && 
+            {toggleModal &&
                 <CustomModal
                 modalStyle="relative bg-white lg:w-[45%] md:w-[70%] w-[95%] mx-auto rounded-[16px] lg:mt-[2rem] mt-[3rem] lg:h-fit h-[80vh] overflow-y-auto"
                 closeModal={() => setToggleModal(false)}
@@ -210,7 +210,7 @@ export default function ProgramTable({ data }: Props) {
                         <form onSubmit={handleMediaUrlSubmit} className='w-full border-y border-y-gray-100 pb-5 pt-2 mt-3'>
                             <label className={labelStyle}>Course Media Url</label>
                             <div className='lg:flex grid gap-3 mt-1'>
-                                <CustomInput 
+                                <CustomInput
                                     placeholder='https://docs.google.com/spreadsheets/d/1jyCiPhfv...'
                                     required
                                     onChange={(e: any) => setMediaUrl(e.target.value)}
@@ -227,7 +227,7 @@ export default function ProgramTable({ data }: Props) {
                         <form onSubmit={handleAssessmentUrlSubmit} className='w-full border-b border-b-gray-100 pb-5 pt-2 mt-3'>
                             <label className={labelStyle}>Assessment Url</label>
                             <div className='lg:flex grid gap-3 mt-1'>
-                                <CustomInput 
+                                <CustomInput
                                     placeholder='https://docs.google.com/spreadsheets/d/1jyCiPhfv...'
                                     required
                                     onChange={(e: any) => setAssessmentUrl(e.target.value)}
@@ -242,13 +242,13 @@ export default function ProgramTable({ data }: Props) {
 
                         {/* assessment and attendance */}
                         <div className='mx-auto px-5 py-3 text-[11px] bg-amber-100 mt-3 rounded-[16px]'>Note: Select an assessment score before clicking either <span className='text-green-600'>Present</span> or <span className='text-red-600'>Absent</span> to mark student's attendance.</div>
-                        
+
                         <div className="grid lg:grid-cols-2 grid-cols-1 gap-2  pb-5 pt-2 mt-3">
                             <div className='w-full'>
                                 <label className={labelStyle}>Assessment</label>
                                 <div className='lg:flex grid gap-3 mt-1'>
-                                    <select 
-                                    onChange={(e: any) => setAssessmentScore(e.target.value)} 
+                                    <select
+                                    onChange={(e: any) => setAssessmentScore(e.target.value)}
                                     className='lg:w-full bg-ryd-gray rounded-[1000px] text-[14px] leading-[26px] font-[400] text-[#576877] px-[26px] py-[15px] outline-none active:outline-none'
                                     >
                                         <option value="0">0</option>
@@ -266,12 +266,12 @@ export default function ProgramTable({ data }: Props) {
                                 </div>
 
                                 <div className='flex gap-2 mt-4'>
-                                    <button 
+                                    <button
                                         onClick={handleMarkPresent}
                                         className={`${btnAttStyle} bg-green-600`}>
                                             Present
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={handleMarkAbsent}
                                         className={`${btnAttStyle} bg-red-700`}>
                                             Absent
