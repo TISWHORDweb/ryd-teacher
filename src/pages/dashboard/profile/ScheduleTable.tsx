@@ -45,6 +45,8 @@ export default function ScheduleTable({ data }: Props) {
                         
                         const nextWeekTime = pTime;
                         nextWeekTime.week(moment().week()+1);
+                        const nDay = getDay(item?.day);
+
                         return(
                             <li key={index} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
                                 <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>
@@ -54,12 +56,20 @@ export default function ScheduleTable({ data }: Props) {
                                 <p className={`${tableBody} w-[15%]`}>
                                     <Moment format='hh:mm A' date={pTime.toISOString()} tz={userInfo.timezone}></Moment>
                                 </p>
-                                <p className={`${tableBody} w-[10%]`}>{getDay(item?.day)}</p>
+                                <p className={`${tableBody} w-[10%]`}>{nDay}</p>
+
                                 <p className={`${tableBody} w-[15%]`}>
-                                    <Moment format='D MMM YYYY' date={pTime.toISOString()} tz={userInfo.timezone}>{nextWeekTime}</Moment>
+                                    <Moment 
+                                        format='D MMM YYYY' 
+                                        date={pTime.toISOString()} tz={userInfo.timezone}>{nextWeekTime}</Moment>
                                 </p>
                                 <p className={`${tableBody} w-[15%] text-center`}>
-                                    <Link to={item?.classLink} target='_blank' referrerPolicy='no-referrer' className={attendanceBtnStyle} onClick={() => setToggleModal(true)}>Go to class</Link>
+                                    <Link 
+                                        to={userInfo?.classLink} 
+                                        target='_blank' 
+                                        referrerPolicy='no-referrer' 
+                                        className={attendanceBtnStyle} 
+                                        onClick={() => setToggleModal(true)}>Go to class</Link>
                                 </p>
                             </li>
                         )})}

@@ -20,6 +20,7 @@ export default function ProgramTable({ data }: Props) {
     const userService = new UserService();
     const dispatch = useDispatch();
 
+
     const [ toggleModal, setToggleModal ] = useState(false);
     const [ mediaUrl, setMediaUrl ] = useState('');
     const [ assessmentUrl, setAssessmentUrl ] = useState('');
@@ -113,7 +114,6 @@ export default function ProgramTable({ data }: Props) {
             if(!res){
                 return;
             }else{
-                // console.log('res',res)
                 dispatch(setUserActivity(res));
                 const ctxStudent = res.programs.filter((item: any) => item.id === selectedStudent?.id)
                 dispatch(setAttendance(ctxStudent));
@@ -168,13 +168,13 @@ export default function ProgramTable({ data }: Props) {
             
                 <ol>
                     {data?.map((item: any, index: number) => {
-                        const pTime = moment.utc().utcOffset(item.child.parent.timeOffset)
-                        pTime.day(item.day)
-                        pTime.hour(item.time)
+                        const pTime = moment.utc().utcOffset(item?.child?.parent?.timeOffset)
+                        pTime.day(item?.day)
+                        pTime.hour(item?.time)
                         pTime.second(0)
                         pTime.minute(0)
                         //convert to teacher time
-                        
+
                         return(
                         <li key={item?.id} className={`w-full flex items-center p-3 ${index % 2 !== 0 ? 'bg-[#F7F7F7]' : 'bg-white'}`}>
                             <p className={`${tableBody} w-[20%] capitalize`}>{item?.child?.firstName} {item?.child?.lastName}</p>

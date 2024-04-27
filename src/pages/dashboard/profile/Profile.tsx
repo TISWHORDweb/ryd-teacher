@@ -27,7 +27,7 @@ export default function Profile() {
         const response = await userService.getActivity();
         if(!response.status){
             return false;
-        }  // console.log('res',res)
+        }  
         dispatch(setUserActivity(response.data));
     }catch(err: any){
         return false;
