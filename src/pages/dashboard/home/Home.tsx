@@ -57,7 +57,7 @@ export default function Home() {
 
             if(!response.status){
                 toast.error(response.message);
-                return;
+                //return;
             }
             dispatch(setUserActivity(response?.data))
             setData(response?.data);

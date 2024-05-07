@@ -115,7 +115,7 @@ export default function ProgramTable({ data }: Props) {
                 return;
             }else{
                 dispatch(setUserActivity(res));
-                const ctxStudent = res.programs.filter((item: any) => item.id === selectedStudent?.id)
+                const ctxStudent = res.programs?.filter((item: any) => item.id === selectedStudent?.id)
                 dispatch(setAttendance(ctxStudent));
                 setStudentAttendance(ctxStudent);
             }
@@ -128,14 +128,14 @@ export default function ProgramTable({ data }: Props) {
     };
 
     const sortAttendance = (data: any) => {
-        const ctxStudent = userActivity.programs.filter((item: any) => item.id === data?.id);
+        const ctxStudent = userActivity?.programs?.filter((item: any) => item.id === data?.id);
         setStudentAttendance(ctxStudent);
         dispatch(setAttendance(ctxStudent));
     }
 
 
     useEffect(() => {
-        const currentStdnt = userActivity.programs.filter((item: any) => item?.id === selectedStudent?.id);
+        const currentStdnt = userActivity?.programs?.filter((item: any) => item?.id === selectedStudent?.id);
         setStudentAttendance(currentStdnt);
         dispatch(setAttendance(currentStdnt));
     }, [isMarked])
@@ -182,7 +182,7 @@ export default function ProgramTable({ data }: Props) {
                             <p className={`${tableBody} w-[15%] text-center`}>{item?.package?.title.replace(/Program/g, '')}</p>
                             <p className={`${tableBody} w-[10%]`}>{item?.level}</p>
                             <p className={`${tableBody} w-[15%]`}>
-                                <Moment format='hh:mm A' date={pTime.toISOString()} tz={userInfo.timezone}></Moment>
+                                <Moment format='hh:mm A' date={pTime.toISOString()} tz={userInfo?.timezone}></Moment>
                             </p>
                             <p className={`${tableBody} w-[10%]`}>{getDay(item?.day)}</p>
                             <p className={`${tableBody} w-[20%] text-center`}>
